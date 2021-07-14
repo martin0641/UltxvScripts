@@ -15,7 +15,7 @@ sudo dnf config-manager --set-enabled AppStream
 sudo dnf -y install mbuffer
 sudo dnf -y install htop
 sudo dnf -y install vnstat
-sudo dnf install compat-openssl10-1:1.0.2o-3.el8.x86_64
+sudo dnf -y install compat-openssl10-1:1.0.2o-3.el8.x86_64
 sudo systemctl start vnstat
 wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
 mkdir git
