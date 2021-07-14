@@ -1,8 +1,9 @@
 #!/bin/bash
 set -x
 # Prepare an ultxv2 instance for DEV-Deployment
-wget https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/ssm/amazon-ssm-agent.rpm
-sudo dnf install -y /tmp/ssm/amazon-ssm-agent.rpm
+sudo dnf install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+sudo systemctl enable amazon-ssm-agent
+sudo systemctl start amazon-ssm-agent
 /bin/bash /root/scripts/misc/ultx-unlock.sh
 sudo ultx enable all
 sudo ultx restart all
