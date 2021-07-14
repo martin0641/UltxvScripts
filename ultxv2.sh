@@ -8,6 +8,8 @@ sudo ultx enable all
 sudo ultx restart all
 sudo hostnamectl set-hostname ultxv2
 sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo dnf config-manager --set-enabled PowerTools
+sudo dnf config-manager --set-enabled BaseOS
 sudo dnf -y install htop
 sudo dnf -y install vnstat
 sudo systemctl start vnstat
