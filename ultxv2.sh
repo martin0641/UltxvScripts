@@ -5,7 +5,7 @@ sudo dnf install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/late
 sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
 /bin/bash /root/scripts/misc/ultx-unlock.sh
-sudo echo 'PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \w ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"' >> /root/.bashrc
+#sudo echo 'PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \w ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"' >> /root/.bashrc
 sudo ultx enable all
 sudo ultx restart all
 sudo hostnamectl set-hostname ultxv2
