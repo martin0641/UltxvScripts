@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 # Prepare an ultxv1 instance for DEV-Deployment
-curl "https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/ssm/amazon-ssm-agent.rpm"
+wget https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/ssm/amazon-ssm-agent.rpm
 sudo dnf install -y /tmp/ssm/amazon-ssm-agent.rpm
 /bin/bash /root/scripts/misc/ultx-unlock.sh
 sudo ultx enable all
@@ -10,9 +10,13 @@ sudo hostnamectl set-hostname ultxv1
 sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 sudo dnf config-manager --set-enabled PowerTools
 sudo dnf config-manager --set-enabled BaseOS
+sudo dnf config-manager --set-enabled AppStream
+sudo dnf -y install mbuffer
 sudo dnf -y install htop
 sudo dnf -y install vnstat
+sudo dnf install compat-openssl10-1:1.0.2o-3.el8.x86_64
 sudo systemctl start vnstat
+wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
 mkdir git
 cd git
 git clone https://git.code.sf.net/p/iperf2/code iperf2-code
