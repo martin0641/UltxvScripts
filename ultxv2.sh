@@ -12,12 +12,15 @@ sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.
 sudo dnf config-manager --set-enabled PowerTools
 sudo dnf config-manager --set-enabled BaseOS
 sudo dnf config-manager --set-enabled AppStream
+sudo dnf install libnsl
 sudo dnf -y install mbuffer
 sudo dnf -y install htop
 sudo dnf -y install vnstat
 sudo dnf -y install compat-openssl10-1:1.0.2o-3.el8.x86_64
 sudo systemctl start vnstat
 wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
+sudo chmod +x bbcp
+sudo cp bbcp /bin
 mkdir git
 cd git
 git clone https://git.code.sf.net/p/iperf2/code iperf2-code
@@ -29,4 +32,5 @@ make install
 mkdir /tmp/ssm
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=1G count=1 iflag=fullblock
+#sudo ssh-keygen -t rsa -b 4096 -C "no@way.fu" -f azure.pub -P ""
 sudo reboot
