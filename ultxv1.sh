@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 # Prepare an ultxv1 instance for DEV-Deployment
-curl https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/ssm/amazon-ssm-agent.rpm
+curl "https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm -o /tmp/ssm/amazon-ssm-agent.rpm"
 sudo dnf install -y /tmp/ssm/amazon-ssm-agent.rpm
 /bin/bash /root/scripts/misc/ultx-unlock.sh
 sudo ultx enable all
