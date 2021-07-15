@@ -5,9 +5,9 @@ sudo dnf install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/late
 sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
 /bin/bash /root/scripts/misc/ultx-unlock.sh
-prompt='[ "$PS1"="\\s-\\v\\\$ " ] && PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \W ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"'
-sudo echo $prompt >> /root/.bashrc
-sudo echo $prompt >> /home/centos/.bashrc
+#prompt='[ "$PS1"="\\s-\\v\\\$ " ] && PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \W ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"'
+#sudo echo $prompt >> /root/.bashrc
+#sudo echo $prompt >> /home/centos/.bashrc
 sudo echo sudo su >> /home/centos/.bash_profile
 sudo echo cd /root >> /home/centos/.bash_profile
 sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf

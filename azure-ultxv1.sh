@@ -2,9 +2,9 @@
 set -x
 # Prepare an ultxv1 instance for DEV-Deployment
 /bin/bash /root/scripts/misc/ultx-unlock.sh
-prompt='[ "$PS1"="\\s-\\v\\\$ " ] && PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \W ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"'
-sudo echo $prompt >> /root/.bashrc
-sudo echo $prompt >> /home/azureuser/.bashrc
+#prompt='[ "$PS1"="\\s-\\v\\\$ " ] && PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \W ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"'
+#sudo echo $prompt >> /root/.bashrc
+#sudo echo $prompt >> /home/azureuser/.bashrc
 sudo echo sudo su >> /home/azureuser/.bash_profile
 sudo echo cd /root >> /home/azureuser/.bash_profile
 sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
