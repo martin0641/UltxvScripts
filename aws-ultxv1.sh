@@ -52,4 +52,4 @@ make && make install
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
 #sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f aws.pub -P ""
-sudo reboot
+sudo reboot now
