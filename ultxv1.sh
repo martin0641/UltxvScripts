@@ -21,6 +21,8 @@ chmod +x /usr/lib/systemd/system-shutdown/graceful.sh
 chmod 755 /usr/lib/systemd/system-shutdown/graceful.sh
 sudo ultx enable all
 sudo ultx restart all
+sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
+sudo echo IdleActionSec=45min >> /etc/systemd/logind.conf
 sudo hostnamectl set-hostname ultxv1
 sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 sudo dnf config-manager --set-enabled PowerTools
@@ -41,8 +43,11 @@ git clone https://git.code.sf.net/p/iperf2/code iperf2-code
 cd iperf2-code/
 /bin/bash /home/centos/git/iperf2-code/configure
 cd /home/centos/git/iperf2-code/
-make
-make install
+make && make install
+cd /home/centos/git
+git clone https://github.com/Microsoft/ntttcp-for-linux
+cd ntttcp-for-linux/src
+make && make install
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
 #sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f aws.pub -P ""
