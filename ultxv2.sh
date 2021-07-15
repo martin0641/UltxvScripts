@@ -5,8 +5,9 @@ sudo dnf install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/late
 sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
 /bin/bash /root/scripts/misc/ultx-unlock.sh
-sudo echo PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \w ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]" >> /root/.bashrc
-sudo echo sudo su >> /home/azureuser/.bash_profile
+prompt='[ "$PS1"="\\s-\\v\\\$ " ] && PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \W ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"'
+sudo echo $prompt >> /root/.bashrc
+sudo echo $prompt >> /home/azureuser/.bashrc
 sudo ultx enable all
 sudo ultx restart all
 sudo hostnamectl set-hostname ultxv2
@@ -14,7 +15,7 @@ sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.
 sudo dnf config-manager --set-enabled PowerTools
 sudo dnf config-manager --set-enabled BaseOS
 sudo dnf config-manager --set-enabled AppStream
-sudo dnf install libnsl
+sudo dnf -y install libnsl
 sudo dnf -y install mbuffer
 sudo dnf -y install htop
 sudo dnf -y install vnstat
@@ -31,7 +32,6 @@ cd iperf2-code/
 cd /home/centos/git/iperf2-code/
 make
 make install
-mkdir /tmp/ssm
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
 #sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f azure.pub -P ""
