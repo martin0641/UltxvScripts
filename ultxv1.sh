@@ -10,6 +10,15 @@ sudo echo $prompt >> /root/.bashrc
 sudo echo $prompt >> /home/centos/.bashrc
 sudo echo sudo su >> /home/centos/.bash_profile
 sudo echo cd /root >> /home/centos/.bash_profile
+sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
+sudo echo IdleActionSec=45min >> /etc/systemd/logind.conf
+sudo echo systemctl stop commandx* >> /usr/lib/systemd/system-shutdown/graceful.sh
+sudo echo systemctl stop accessx* >>/usr/lib/systemd/system-shutdown/graceful.sh
+sudo echo systemctl stop nginx >> /usr/lib/systemd/system-shutdown/graceful.sh
+sudo echo systemctl stop postgresql* >> /usr/lib/systemd/system-shutdown/graceful.sh
+sudo echo systemctl stop ultxd* >> /usr/lib/systemd/system-shutdown/graceful.sh
+chmod +x /usr/lib/systemd/system-shutdown/graceful.sh
+chmod 755 /usr/lib/systemd/system-shutdown/graceful.sh
 sudo ultx enable all
 sudo ultx restart all
 sudo hostnamectl set-hostname ultxv1

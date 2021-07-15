@@ -8,8 +8,21 @@ sudo systemctl start amazon-ssm-agent
 prompt='[ "$PS1"="\\s-\\v\\\$ " ] && PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \W ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"'
 sudo echo $prompt >> /root/.bashrc
 sudo echo $prompt >> /home/azureuser/.bashrc
+sudo echo sudo su >> /home/azureuser/.bash_profile
+sudo echo cd /root >> /home/azureuser/.bash_profile
+sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
+sudo echo IdleActionSec=45min >> /etc/systemd/logind.conf
+sudo echo systemctl stop commandx* >> /usr/lib/systemd/system-shutdown/graceful.sh
+sudo echo systemctl stop accessx* >>/usr/lib/systemd/system-shutdown/graceful.sh
+sudo echo systemctl stop nginx >> /usr/lib/systemd/system-shutdown/graceful.sh
+sudo echo systemctl stop postgresql* >> /usr/lib/systemd/system-shutdown/graceful.sh
+sudo echo systemctl stop ultxd* >> /usr/lib/systemd/system-shutdown/graceful.sh
+chmod +x /usr/lib/systemd/system-shutdown/graceful.sh
+chmod 755 /usr/lib/systemd/system-shutdown/graceful.sh
 sudo ultx enable all
 sudo ultx restart all
+sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
+sudo echo IdleActionSec=45min >> /etc/systemd/logind.conf
 sudo hostnamectl set-hostname ultxv2
 sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 sudo dnf config-manager --set-enabled PowerTools
