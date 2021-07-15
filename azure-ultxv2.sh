@@ -30,6 +30,7 @@ sudo dnf -y install mbuffer
 sudo dnf -y install htop
 sudo dnf -y install vnstat
 sudo dnf -y install compat-openssl10-1:1.0.2o-3.el8.x86_64
+sudo systemctl enable vnstat
 sudo systemctl start vnstat
 wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
 sudo chmod +x bbcp
