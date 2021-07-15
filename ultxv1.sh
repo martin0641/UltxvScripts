@@ -5,7 +5,8 @@ sudo dnf install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/late
 sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
 /bin/bash /root/scripts/misc/ultx-unlock.sh
-#sudo echo 'PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \w ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"' >> /root/.bashrc
+sudo echo PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \w ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]" >> /root/.bashrc
+sudo echo sudo su >> /home/centos/.bash_profile
 sudo ultx enable all
 sudo ultx restart all
 sudo hostnamectl set-hostname ultxv1
@@ -32,6 +33,6 @@ make
 make install
 mkdir /tmp/ssm
 sudo dig +short myip.opendns.com @resolver1.opendns.com
-sudo dd if=/dev/urandom of=/root/rand.file bs=1G count=1 iflag=fullblock
-#sudo ssh-keygen -t rsa -b 4096 -C "no@way.fu" -f aws.pub -P ""
+sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
+#sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f aws.pub -P ""
 sudo reboot
