@@ -36,7 +36,9 @@ sudo dnf -y install compat-openssl10-1:1.0.2o-3.el8.x86_64
 sudo dnf -y install php-cli
 sudo dnf -y install php-xml
 sudo dnf -y install php-json
-#sudo dnf -y install 
+sudo dnf -y install util-linux-user-2.32.1-27.el8.x86_64
+sudo dnf -y install mlocate-0.26-20.el8.x86_64
+sudo systemctl start mlocate-updatedb.service
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
 wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
@@ -60,9 +62,9 @@ cd phoronix-test-suite
 sudo ./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
-sudo printf "# /etc/systemd/system/iperf.service\n[Unit]\nDescription=iperf server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf -s --compatibility\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf.service
-sudo systemctl enable iperf.service
+sudo printf "# /etc/systemd/system/iperf.service\n[Unit]\nDescription=iperf server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf -s -e -i 1 -m -u -z --histograms --udp-histogram\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf.service
 sudo systemctl daemon-reload
+sudo systemctl enable iperf.service
 sudo systemctl start iperf.service
 sudo printf "# /etc/systemd/system/iperf3.service\n[Unit]\nDescription=iperf3 server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf3 -s \n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf3.service
 sudo systemctl enable iperf3.service
@@ -72,6 +74,10 @@ sudo printf "# /etc/systemd/system/pts.service\n[Unit]\nDescription=pts server\n
 sudo systemctl enable pts.service
 sudo systemctl daemon-reload
 sudo systemctl start pts.service
+sudo tuned-adm profile hpc-compute
 #sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f aws.pub -P ""
 #phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
+sudo rm -Rf /home/centos/git/iperf2-code
+sudo chsh -s /bin/fish
+sudo chsh -s /bin/fish centos
 sudo reboot now
