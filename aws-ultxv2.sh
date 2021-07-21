@@ -33,6 +33,10 @@ sudo dnf -y install mbuffer
 sudo dnf -y install htop
 sudo dnf -y install vnstat
 sudo dnf -y install compat-openssl10-1:1.0.2o-3.el8.x86_64
+sudo dnf -y install php-cli
+sudo dnf -y install php-xml
+sudo dnf -y install php-json
+#sudo dnf -y install 
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
 wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
@@ -49,7 +53,25 @@ cd /home/centos/git
 git clone https://github.com/Microsoft/ntttcp-for-linux
 cd ntttcp-for-linux/src
 make && make install
+cd /root/git
+wget https://phoronix-test-suite.com/releases/phoronix-test-suite-10.4.0.tar.gz
+tar xvf phoronix-test-suite-10.4.0.tar.gz
+cd phoronix-test-suite
+sudo ./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
+sudo printf "# /etc/systemd/system/iperf.service\n[Unit]\nDescription=iperf server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf -s --compatibility\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf.service
+sudo systemctl enable iperf.service
+sudo systemctl daemon-reload
+sudo systemctl start iperf.service
+sudo printf "# /etc/systemd/system/iperf3.service\n[Unit]\nDescription=iperf3 server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf3 -s \n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf3.service
+sudo systemctl enable iperf3.service
+sudo systemctl daemon-reload
+sudo systemctl start iperf3.service
+sudo printf "# /etc/systemd/system/pts.service\n[Unit]\nDescription=pts server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/root/git/phoronix-test-suite/./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N \n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/pts.service
+sudo systemctl enable pts.service
+sudo systemctl daemon-reload
+sudo systemctl start pts.service
 #sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f aws.pub -P ""
-sudo reboot
+#phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
+sudo reboot now
