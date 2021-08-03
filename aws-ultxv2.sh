@@ -48,10 +48,10 @@ sudo mkdir git
 sudo cd git
 sudo git clone https://git.code.sf.net/p/iperf2/code iperf2-code
 sudo cd iperf2-code/
-sudo /bin/bash /home/centos/git/iperf2-code/configure
-sudo cd /home/centos/git/iperf2-code/
+sudo /bin/bash /root/git/iperf2-code/configure
+sudo cd /root/git/iperf2-code/
 sudo make && make install
-sudo cd /home/centos/git
+sudo cd /root/git
 sudo git clone https://github.com/Microsoft/ntttcp-for-linux
 sudo cd ntttcp-for-linux/src
 sudo make && make install

@@ -51,7 +51,7 @@ sudo cd iperf2-code/
 sudo /bin/bash /root/git/iperf2-code/configure
 sudo cd /root/git/iperf2-code/
 sudo make && make install
-sudo cd /root/centos/git
+sudo cd /root/git
 sudo git clone https://github.com/Microsoft/ntttcp-for-linux
 sudo cd ntttcp-for-linux/src
 sudo make && make install
