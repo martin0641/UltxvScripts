@@ -43,8 +43,8 @@ sudo systemctl start mlocate-updatedb.service
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
 sudo wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
-sudo sudo chmod +x bbcp
-sudo sudo cp bbcp /bin
+sudo chmod +x bbcp
+sudo cp bbcp /bin
 sudo mkdir git
 sudo -s
 cd git

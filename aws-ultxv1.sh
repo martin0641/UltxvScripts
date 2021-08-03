@@ -82,8 +82,8 @@ sudo printf "# /etc/systemd/system/pts.service\n[Unit]\nDescription=pts server\n
 sudo systemctl enable pts.service
 sudo systemctl daemon-reload
 #sudo systemctl start pts.service
-#sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f aws.pub -P ""
 sudo tuned-adm profile hpc-compute
+#sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f aws.pub -P ""
 #phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
 sudo rm -Rf /root/git/iperf2-code
 sudo chsh -s /bin/fish
