@@ -36,6 +36,7 @@ sudo dnf -y install compat-openssl10-1:1.0.2o-3.el8.x86_64
 sudo dnf -y install php-cli
 sudo dnf -y install php-xml
 sudo dnf -y install php-json
+sudo dnf -y install fish
 sudo dnf -y install util-linux-user-2.32.1-27.el8.x86_64
 sudo dnf -y install mlocate-0.26-20.el8.x86_64
 sudo systemctl start mlocate-updatedb.service
@@ -45,20 +46,27 @@ sudo wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
 sudo sudo chmod +x bbcp
 sudo sudo cp bbcp /bin
 sudo mkdir git
-sudo cd git
+sudo -s
+cd git
 sudo git clone https://git.code.sf.net/p/iperf2/code iperf2-code
-sudo cd iperf2-code/
+sudo -s
+cd iperf2-code/
 sudo /bin/bash /root/git/iperf2-code/configure
-sudo cd /root/git/iperf2-code/
+sudo -s
+cd /root/git/iperf2-code/
 sudo make && make install
-sudo cd /root/git
+sudo -s
+cd /root/git
 sudo git clone https://github.com/Microsoft/ntttcp-for-linux
-sudo cd ntttcp-for-linux/src
+sudo -s
+cd ntttcp-for-linux/src
 sudo make && make install
-sudo cd /root/git
+sudo -s
+cd /root/git
 sudo wget https://phoronix-test-suite.com/releases/phoronix-test-suite-10.4.0.tar.gz
 sudo tar xvf phoronix-test-suite-10.4.0.tar.gz
-sudo cd phoronix-test-suite
+sudo -s
+cd phoronix-test-suite
 sudo ./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
