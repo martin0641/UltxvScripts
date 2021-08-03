@@ -41,24 +41,24 @@ sudo dnf -y install mlocate-0.26-20.el8.x86_64
 sudo systemctl start mlocate-updatedb.service
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
-wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
+sudo wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
 sudo chmod +x bbcp
 sudo cp bbcp /bin
-mkdir git
-cd git
-git clone https://git.code.sf.net/p/iperf2/code iperf2-code
-cd iperf2-code/
-/bin/bash /home/centos/git/iperf2-code/configure
-cd /home/centos/git/iperf2-code/
-make && make install
-cd /home/centos/git
-git clone https://github.com/Microsoft/ntttcp-for-linux
-cd ntttcp-for-linux/src
-make && make install
-cd /root/git
-wget https://phoronix-test-suite.com/releases/phoronix-test-suite-10.4.0.tar.gz
-tar xvf phoronix-test-suite-10.4.0.tar.gz
-cd phoronix-test-suite
+sudo mkdir git
+sudo cd git
+sudo git clone https://git.code.sf.net/p/iperf2/code iperf2-code
+sudo cd iperf2-code/
+sudo /bin/bash /root/git/iperf2-code/configure
+sudo cd /root/git/iperf2-code/
+sudo make && make install
+sudo cd /root/centos/git
+sudo git clone https://github.com/Microsoft/ntttcp-for-linux
+sudo cd ntttcp-for-linux/src
+sudo make && make install
+sudo cd /root/git
+sudo wget https://phoronix-test-suite.com/releases/phoronix-test-suite-10.4.0.tar.gz
+sudo tar xvf phoronix-test-suite-10.4.0.tar.gz
+sudo cd phoronix-test-suite
 sudo ./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
@@ -73,11 +73,11 @@ sudo systemctl start iperf3.service
 sudo printf "# /etc/systemd/system/pts.service\n[Unit]\nDescription=pts server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/root/git/phoronix-test-suite/./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N \n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/pts.service
 sudo systemctl enable pts.service
 sudo systemctl daemon-reload
-sudo systemctl start pts.service
+#sudo systemctl start pts.service
 #sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f aws.pub -P ""
 sudo tuned-adm profile hpc-compute
 #phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
-sudo rm -Rf /home/centos/git/iperf2-code
+sudo rm -Rf /root/git/iperf2-code
 sudo chsh -s /bin/fish
 sudo chsh -s /bin/fish centos
 sudo reboot now
