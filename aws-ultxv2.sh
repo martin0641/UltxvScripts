@@ -5,9 +5,6 @@ sudo dnf install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/late
 sudo systemctl enable amazon-ssm-agent
 sudo systemctl start amazon-ssm-agent
 /bin/bash /root/scripts/misc/ultx-unlock.sh
-#prompt='[ "$PS1"="\\s-\\v\\\$ " ] && PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \W ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"'
-#sudo echo $prompt >> /root/.bashrc
-#sudo echo $prompt >> /home/centos/.bashrc
 sudo echo sudo su >> /home/centos/.bash_profile
 sudo echo cd /root >> /home/centos/.bash_profile
 sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
@@ -39,38 +36,32 @@ sudo dnf -y install php-json
 sudo dnf -y install fish
 sudo dnf -y install util-linux-user-2.32.1-27.el8.x86_64
 sudo dnf -y install mlocate-0.26-20.el8.x86_64
+sudo dnf -y install redhat-lsb-core-4.1-47.el8.x86_64
 sudo systemctl start mlocate-updatedb.service
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
+git clone https://github.com/oh-my-fish/oh-my-fish.git
 sudo wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
 sudo chmod +x bbcp
 sudo cp bbcp /bin
 sudo mkdir git
-sudo -s
-cd git
+sudo su
+cd /root/git
 sudo git clone https://git.code.sf.net/p/iperf2/code iperf2-code
-sudo -s
-cd iperf2-code/
-sudo /bin/bash /root/git/iperf2-code/configure
-sudo -s
 cd /root/git/iperf2-code/
+sudo /bin/bash /root/git/iperf2-code/configure
 sudo make && make install
-sudo -s
 cd /root/git
 sudo git clone https://github.com/Microsoft/ntttcp-for-linux
-sudo -s
-cd ntttcp-for-linux/src
+cd /root/git/ntttcp-for-linux/src
 sudo make && make install
-sudo -s
 cd /root/git
 sudo wget https://phoronix-test-suite.com/releases/phoronix-test-suite-10.4.0.tar.gz
 sudo tar xvf phoronix-test-suite-10.4.0.tar.gz
-sudo -s
-cd phoronix-test-suite
-sudo ./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
+cd /root/git/phoronix-test-suite
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
-sudo printf "# /etc/systemd/system/iperf.service\n[Unit]\nDescription=iperf server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf -s -e -i 1 -m -u -z --histograms --udp-histogram\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf.service
+sudo printf "# /etc/systemd/system/iperf.service\n[Unit]\nDescription=iperf server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf --server --enhanced --format g --interval 1 --print_mss --realtime --histograms --udp-histogram --port 5001 --sum-only --udp --daemon\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf.service
 sudo systemctl daemon-reload
 sudo systemctl enable iperf.service
 sudo systemctl start iperf.service
@@ -81,11 +72,41 @@ sudo systemctl start iperf3.service
 sudo printf "# /etc/systemd/system/pts.service\n[Unit]\nDescription=pts server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/root/git/phoronix-test-suite/./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N \n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/pts.service
 sudo systemctl enable pts.service
 sudo systemctl daemon-reload
-#sudo systemctl start pts.service
 sudo tuned-adm profile hpc-compute
-#sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f aws.pub -P ""
-#phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
+sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f remote.pub -P ""
 sudo rm -Rf /root/git/iperf2-code
 sudo chsh -s /bin/fish
 sudo chsh -s /bin/fish centos
+cd /root/git/
+sudo git clone https://github.com/oh-my-fish/oh-my-fish.git
+cd oh-my-fish
+bin/install --offline
+cd /root/git/
+sudo git clone https://github.com/powerline/fonts.git
+cd /root/git/fonts
+/bin/bash /root/git/fonts/install.sh
+cd /root/git/
+sudo git clone https://github.com/mishamyrt/Lilex.git
+cd /root/git/Lilex
+/bin/bash /root/git/fonts/install.sh
+sudo mkdir /root/scripts/starship
+cd /root/scripts/starship
+sudo curl https://starship.rs/install.sh >> /root/scripts/starship/install.sh
+sudo chmod +x /root/scripts/starship/install.sh
+/bin/bash /root/scripts/starship/install.sh -V -f
+sudo echo -e "starship init fish | source" >> /root/.config/fish/config.fish
+omf install
 sudo reboot now
+#sudo systemctl start pts.service
+#sudo ./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
+#prompt='[ "$PS1"="\\s-\\v\\\$ " ] && PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \W ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"'
+#sudo echo $prompt >> /root/.bashrc
+#sudo echo $prompt >> /home/centos/.bashrc
+#dnf provides '*filename'
+#cat /usr/local/fxv/etc/variables.json
+#nano /usr/local/fxv/etc/variables.json
+#iperf2-UDP
+#iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 -t 10 --bandwidth 500m
+#iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 -t 10 --bandwidth 500m -P 2
+#iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 --num 1G --bandwidth 500m
+#iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 --num 1G --bandwidth 500m -P 2
