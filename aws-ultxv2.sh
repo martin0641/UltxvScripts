@@ -25,6 +25,7 @@ sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.
 sudo dnf config-manager --set-enabled PowerTools
 sudo dnf config-manager --set-enabled BaseOS
 sudo dnf config-manager --set-enabled AppStream
+sudo dnf -y remove iperf3
 sudo dnf -y install libnsl
 sudo dnf -y install mbuffer
 sudo dnf -y install htop
@@ -37,6 +38,7 @@ sudo dnf -y install fish
 sudo dnf -y install util-linux-user-2.32.1-27.el8.x86_64
 sudo dnf -y install mlocate-0.26-20.el8.x86_64
 sudo dnf -y install redhat-lsb-core-4.1-47.el8.x86_64
+#sudo dnf -y install powerline-fonts
 sudo systemctl start mlocate-updatedb.service
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
@@ -52,6 +54,11 @@ cd /root/git/iperf2-code/
 sudo /bin/bash /root/git/iperf2-code/configure
 sudo make && make install
 cd /root/git
+sudo git clone https://github.com/esnet/iperf.git
+cd /root/git/iperf/
+sudo /bin/bash /root/git/iperf/configure
+sudo make && make install && ldconfig
+cd /root/git
 sudo git clone https://github.com/Microsoft/ntttcp-for-linux
 cd /root/git/ntttcp-for-linux/src
 sudo make && make install
@@ -61,14 +68,28 @@ sudo tar xvf phoronix-test-suite-10.4.0.tar.gz
 cd /root/git/phoronix-test-suite
 sudo dig +short myip.opendns.com @resolver1.opendns.com
 sudo dd if=/dev/urandom of=/root/rand.file bs=2G count=1 iflag=fullblock
-sudo printf "# /etc/systemd/system/iperf.service\n[Unit]\nDescription=iperf server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf --server --enhanced --format g --interval 1 --print_mss --realtime --histograms --udp-histogram --port 5001 --sum-only --udp --daemon\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf.service
+cd /root/git
+sudo git clone https://github.com/powerline/fonts.git --depth=1
+cd /root/git/fonts
+/bin/bash /root/git/fonts/install.sh
+cd /root/git
+sudo rm -rf fonts
+sudo printf "# /etc/systemd/system/iperf-tcp.service\n[Unit]\nDescription=iperf-tcp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf --server --enhanced --format g --interval 1 --print_mss --realtime --histograms --port 5021 --sum-only --daemon\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf-tcp.service
 sudo systemctl daemon-reload
-sudo systemctl enable iperf.service
-sudo systemctl start iperf.service
-sudo printf "# /etc/systemd/system/iperf3.service\n[Unit]\nDescription=iperf3 server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf3 -s \n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf3.service
-sudo systemctl enable iperf3.service
+sudo systemctl enable iperf-tcp.service
+sudo systemctl start iperf-tcp.service
+sudo printf "# /etc/systemd/system/iperf-udp.service\n[Unit]\nDescription=iperf-udp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf --server --enhanced --format g --interval 1 --print_mss --realtime --histograms --udp-histogram --port 5001 --sum-only --udp --daemon\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf-udp.service
 sudo systemctl daemon-reload
-sudo systemctl start iperf3.service
+sudo systemctl enable iperf-udp.service
+sudo systemctl start iperf-udp.service
+sudo printf "# /etc/systemd/system/iperf3-tcp.service\n[Unit]\nDescription=iperf3-tcp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf3 --server -p 5231\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf3-tcp.service
+sudo systemctl daemon-reload
+sudo systemctl enable iperf3-tcp.service
+sudo systemctl start iperf3-tcp.service
+sudo printf "# /etc/systemd/system/iperf3-udp.service\n[Unit]\nDescription=iperf3-udp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf3 --server -p 5201 --udp\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf3-udp.service
+sudo systemctl daemon-reload
+sudo systemctl enable iperf3-udp.service
+sudo systemctl start iperf3-udp.service
 sudo printf "# /etc/systemd/system/pts.service\n[Unit]\nDescription=pts server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/root/git/phoronix-test-suite/./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N \n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/pts.service
 sudo systemctl enable pts.service
 sudo systemctl daemon-reload
