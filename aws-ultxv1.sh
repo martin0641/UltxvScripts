@@ -132,3 +132,4 @@ sudo reboot now
 #iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 --num 1G --bandwidth 500m
 #iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 --num 1G --bandwidth 500m -P 2
 #iperf3-TCP
+yum install ntpdate.x86_64 -y
