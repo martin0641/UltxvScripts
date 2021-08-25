@@ -96,8 +96,6 @@ sudo systemctl daemon-reload
 sudo tuned-adm profile hpc-compute
 sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f remote.pub -P ""
 sudo rm -Rf /root/git/iperf2-code
-#sudo chsh -s /bin/fish
-#sudo chsh -s /bin/fish centos
 cd /root/git/
 sudo git clone https://github.com/oh-my-fish/oh-my-fish.git
 cd oh-my-fish
@@ -132,9 +130,11 @@ omf install
 #iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 --num 1G --bandwidth 500m
 #iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 --num 1G --bandwidth 500m -P 2
 #iperf3-TCP
-
-
+#iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 --num 1G --bandwidth 500m -P 2
 ##
+
+#sudo chsh -s /bin/fish centos
+#sudo chsh -s /bin/fish
 
 #Remove fedoraproject
 #systemd-timesyncd.x86_64
