@@ -38,6 +38,7 @@ sudo dnf -y install fish
 sudo dnf -y install util-linux-user-2.32.1-27.el8.x86_64
 sudo dnf -y install mlocate-0.26-20.el8.x86_64
 sudo dnf -y install redhat-lsb-core-4.1-47.el8.x86_64
+sudo dnf -y install ntpdate.x86_64
 #sudo dnf -y install powerline-fonts
 sudo systemctl start mlocate-updatedb.service
 sudo systemctl enable vnstat
@@ -47,7 +48,6 @@ sudo wget https://www.slac.stanford.edu/~abh/bbcp/bin/amd64_rhel60/bbcp
 sudo chmod +x bbcp
 sudo cp bbcp /bin
 sudo mkdir git
-sudo su
 cd /root/git
 sudo git clone https://git.code.sf.net/p/iperf2/code iperf2-code
 cd /root/git/iperf2-code/
@@ -96,8 +96,7 @@ sudo systemctl daemon-reload
 sudo tuned-adm profile hpc-compute
 sudo ssh-keygen -t rsa -b 4096 -C "no@way.foo" -f remote.pub -P ""
 sudo rm -Rf /root/git/iperf2-code
-sudo chsh -s /bin/fish
-sudo chsh -s /bin/fish centos
+##sudo chsh -s /bin/fish centos
 cd /root/git/
 sudo git clone https://github.com/oh-my-fish/oh-my-fish.git
 cd oh-my-fish
@@ -117,7 +116,7 @@ sudo chmod +x /root/scripts/starship/install.sh
 /bin/bash /root/scripts/starship/install.sh -V -f
 sudo echo -e "starship init fish | source" >> /root/.config/fish/config.fish
 omf install
-sudo reboot now
+#sudo reboot now
 #sudo systemctl start pts.service
 #sudo ./phoronix-test-suite phoromatic.connect 52.53.234.213:8201/LS7E0N
 #prompt='[ "$PS1"="\\s-\\v\\\$ " ] && PS1="\[$(tput setaf 33)\][\u@$(dig +short myip.opendns.com @resolver1.opendns.com) | \W ]\[$(tput sgr0)\] \[$(tput setaf 34)\]\\$\[$(tput sgr0)\]"'
@@ -132,4 +131,9 @@ sudo reboot now
 #iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 --num 1G --bandwidth 500m
 #iperf --port 5001 --trip-times --format g --print_mss --enhanced --interval 1 --realtime --sum-only --txdelay-time 1 --udp --len 1408 --client 127.0.0.1 --num 1G --bandwidth 500m -P 2
 #iperf3-TCP
-yum install ntpdate.x86_64 -y
+
+
+##
+
+#Remove fedoraproject
+#systemd-timesyncd.x86_64
