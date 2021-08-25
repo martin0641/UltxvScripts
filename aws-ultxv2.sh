@@ -38,8 +38,9 @@ sudo dnf -y install fish
 sudo dnf -y install util-linux-user-2.32.1-27.el8.x86_64
 sudo dnf -y install mlocate-0.26-20.el8.x86_64
 sudo dnf -y install redhat-lsb-core-4.1-47.el8.x86_64
-sudo dnf -y install ntpdate.x86_64
-#sudo dnf -y install powerline-fonts
+sudo dnf -y install systemd-timesyncd.x86_64
+sudo dnf -y install powerline-fonts
+sudo dnf -y install screen
 sudo systemctl start mlocate-updatedb.service
 sudo systemctl enable vnstat
 sudo systemctl start vnstat
@@ -74,19 +75,19 @@ cd /root/git/fonts
 /bin/bash /root/git/fonts/install.sh
 cd /root/git
 sudo rm -rf fonts
-sudo printf "# /etc/systemd/system/iperf-tcp.service\n[Unit]\nDescription=iperf-tcp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf --server --enhanced --format g --interval 1 --print_mss --realtime --histograms --port 5021 --sum-only --daemon\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf-tcp.service
+sudo printf "# /etc/systemd/system/iperf-tcp.service\n[Unit]\nDescription=iperf-tcp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf --server --enhanced --format g --interval 1 --print_mss --realtime --histograms --port 5021 --sum-only --daemon --output /var/log/iperf-tcp.log\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf-tcp.service
 sudo systemctl daemon-reload
 sudo systemctl enable iperf-tcp.service
 sudo systemctl start iperf-tcp.service
-sudo printf "# /etc/systemd/system/iperf-udp.service\n[Unit]\nDescription=iperf-udp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf --server --enhanced --format g --interval 1 --print_mss --realtime --histograms --udp-histogram --port 5001 --sum-only --udp --daemon\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf-udp.service
+sudo printf "# /etc/systemd/system/iperf-udp.service\n[Unit]\nDescription=iperf-udp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/local/bin/iperf --server --enhanced --format g --interval 1 --print_mss --realtime --histograms --udp-histogram --port 5001 --sum-only --udp --daemon --output /var/log/iperf-udp.log\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf-udp.service
 sudo systemctl daemon-reload
 sudo systemctl enable iperf-udp.service
 sudo systemctl start iperf-udp.service
-sudo printf "# /etc/systemd/system/iperf3-tcp.service\n[Unit]\nDescription=iperf3-tcp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf3 --server -p 5231\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf3-tcp.service
+sudo printf "# /etc/systemd/system/iperf3-tcp.service\n[Unit]\nDescription=iperf3-tcp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf3 --server -p 5231 --logfile /var/log/iperf3-tcp\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf3-tcp.service
 sudo systemctl daemon-reload
 sudo systemctl enable iperf3-tcp.service
 sudo systemctl start iperf3-tcp.service
-sudo printf "# /etc/systemd/system/iperf3-udp.service\n[Unit]\nDescription=iperf3-udp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf3 --server -p 5201 --udp\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf3-udp.service
+sudo printf "# /etc/systemd/system/iperf3-udp.service\n[Unit]\nDescription=iperf3-udp server\nAfter=syslog.target network.target auditd.service\n[Service]\nExecStart=/usr/bin/iperf3 --server -p 5201 --udp --logfile /var/log/iperf3-udp\n[Install]\nWantedBy=multi-user.target\n" >> /etc/systemd/system/iperf3-udp.service
 sudo systemctl daemon-reload
 sudo systemctl enable iperf3-udp.service
 sudo systemctl start iperf3-udp.service
