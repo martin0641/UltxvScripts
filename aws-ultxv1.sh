@@ -138,4 +138,46 @@ omf install
 #sudo chsh -s /bin/fish
 
 #Remove fedoraproject
-#
+##
+
+# .bashrc
+
+# User specific aliases and functions
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+if [ -e $HOME/.bash_aliases ]; then
+    source $HOME/.bash_aliases
+fi
+if [ -e $HOME/.bash_functions ]; then
+    source $HOME/.bash_functions
+fi
+
+[root@ultxv1 ~]# cat ~/.bash_aliases
+alias ls='ls -Flah'
+alias ll='ls -Flah'
+alias lt='ls --human-readable --size -1 -S --classify'
+alias mnt="mount | awk -F' ' '{ printf \"%s\t%s\n\",\$1,\$3; }' | column -t | egrep ^/dev/ | sort"
+alias gh='history|grep'
+alias left='ls -t -1'
+alias count='find . -type f | wc -l'
+alias cpv='rsync -ah --info=progress2'
+alias tcn='mv --force -t ~/.local/share/Trash'
+
+[root@ultxv1 ~]# cat ~/.bash_functions
+function cl() {
+    DIR="$*";
+        # if no DIR given, go home
+        if [ $# -lt 1 ]; then
+                DIR=$HOME;
+    fi;
+    builtin cd "${DIR}" && \
+    # use your preferred ls command
+        ls -F --color=auto
+}
