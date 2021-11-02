@@ -7,19 +7,19 @@ sudo systemctl start amazon-ssm-agent
 /bin/bash /root/scripts/misc/ultx-unlock.sh
 sudo echo sudo su >> /home/centos/.bash_profile
 sudo echo cd /root >> /home/centos/.bash_profile
-sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
-sudo echo IdleActionSec=45min >> /etc/systemd/logind.conf
-sudo echo systemctl stop commandx* >> /usr/lib/systemd/system-shutdown/graceful.sh
-sudo echo systemctl stop accessx* >>/usr/lib/systemd/system-shutdown/graceful.sh
-sudo echo systemctl stop nginx >> /usr/lib/systemd/system-shutdown/graceful.sh
-sudo echo systemctl stop postgresql* >> /usr/lib/systemd/system-shutdown/graceful.sh
-sudo echo systemctl stop ultxd* >> /usr/lib/systemd/system-shutdown/graceful.sh
-chmod +x /usr/lib/systemd/system-shutdown/graceful.sh
+#sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
+#sudo echo IdleActionSec=45min >> /etc/systemd/logind.conf
+#sudo echo systemctl stop commandx* >> /usr/lib/systemd/system-shutdown/graceful.sh
+#sudo echo systemctl stop accessx* >>/usr/lib/systemd/system-shutdown/graceful.sh
+#sudo echo systemctl stop nginx >> /usr/lib/systemd/system-shutdown/graceful.sh
+#sudo echo systemctl stop postgresql* >> /usr/lib/systemd/system-shutdown/graceful.sh
+#sudo echo systemctl stop ultxd* >> /usr/lib/systemd/system-shutdown/graceful.sh
+#chmod +x /usr/lib/systemd/system-shutdown/graceful.sh
 chmod 755 /usr/lib/systemd/system-shutdown/graceful.sh
-sudo ultx enable all
+#sudo ultx enable all
 sudo ultx restart all
-sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
-sudo echo IdleActionSec=45min >> /etc/systemd/logind.conf
+#sudo echo IdleAction=shutdown >> /etc/systemd/logind.conf
+#sudo echo IdleActionSec=45min >> /etc/systemd/logind.conf
 sudo hostnamectl set-hostname ultxv1
 sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 sudo dnf config-manager --set-enabled PowerTools
